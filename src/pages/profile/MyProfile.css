@@ -1,0 +1,52 @@
+.profile-container {
+  background-color: #f1f1f1;
+  padding-top: 200px;
+  padding-bottom: 300px;
+  position: relative;
+}
+
+.profile-container .img-1 {
+  width: 30px;
+  height: 30px;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+small {
+  color: #a8a8a8;
+}
+
+.data-container {
+  background-color: #ffffff;
+  height: 450px;
+  margin-bottom: 250px;
+}
+
+.history-trip {
+  position: absolute;
+  height: 49px;
+  left: 300px;
+  top: 830px;
+  color: #f1f1f1;
+}
+
+.profile-img {
+  width: 350px;
+  height: auto;
+}
+
+.profile-img .camera {
+  width: 50px;
+  transition: all 0.5s !important;
+  top: 40%;
+  left: 43%;
+  cursor: pointer;
+  z-index: 100000;
+}
+
+.profile-img:hover .profile {
+  filter: blur(1px);
+  cursor: pointer;
+}

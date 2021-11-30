@@ -1,0 +1,23 @@
+.home-container {
+  width: 80%;
+  padding-top: 200px;
+}
+
+::placeholder {
+  color: rgb(206, 198, 198) !important;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.thumbnail-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+body {
+  background-color: #212529;
+}

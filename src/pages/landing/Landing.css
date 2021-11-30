@@ -1,0 +1,29 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.custom-container {
+  width: 85%;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 200px;
+}
+
+.custom-container h1,
+span {
+  font-size: 6rem;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 700;
+}
+
+.custom-container p {
+  font-family: "Poppins", sans-serif;
+}
+
+.custom-container img {
+  width: 100%;
+}
+
+::placeholder {
+  color: #fff;
+}
