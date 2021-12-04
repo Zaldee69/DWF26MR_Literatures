@@ -150,14 +150,14 @@ const Register = ({
             ></Form.Group>
             <Form.Group className="mb-4" controlId="gender">
               <Form.Label className="fw-bold text-light">Gender</Form.Label>
-              <select
-                className="bg-secondary text-light rounded  shadow-none form-select"
+              <Form.Control
                 onChange={registerOnChangeHandler}
+                as="textarea"
                 name="gender"
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+                rows={3}
+                className="bg-secondary shadow-none"
+                defaultValue={register.gender}
+              />
             </Form.Group>
             <div className="d-flex flex-column gap-2 ">
               <Button
