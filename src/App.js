@@ -30,9 +30,7 @@ function App() {
       setAuthToken(localStorage.token);
     }
   }, []);
-  useEffect(() => {
-    userAuth();
-  }, []);
+
   const userAuth = () => {
     API.get("/check-auth")
       .then((response) => {
@@ -42,7 +40,8 @@ function App() {
           });
         }
         //get user data
-        let payload = response.data.dataUser;
+        let payload = response.data;
+        console.log(response);
 
         payload.token = localStorage.token;
         //send data to useContext
@@ -57,6 +56,10 @@ function App() {
         });
       });
   };
+
+  useEffect(() => {
+    userAuth();
+  }, []);
 
   return (
     <BrowserRouter>
