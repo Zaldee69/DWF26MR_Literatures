@@ -25,7 +25,6 @@ const Register = ({
   const failedNotify = (text) => toast.error(text);
 
   const registerSubmitHandler = (e) => {
-    console.log(register);
     if (
       !register.fullname ||
       !register.email ||
