@@ -3,6 +3,7 @@ import LandingNavbar from "../../components/molecules/LandingNavbar";
 import { Container, Table } from "react-bootstrap";
 import { API } from "../../config/API";
 import Button from "@restart/ui/esm/Button";
+import { Link } from "react-router-dom";
 
 const AdminPage = () => {
   const [data, setData] = useState([]);
@@ -83,8 +84,13 @@ const AdminPage = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.author}</td>
-                  <td>{item.isbn}</td>
-                  <td>{item.title}</td>
+                  <td>{item.isbn} </td>
+                  <td>
+                    {" "}
+                    <a className="text-primary" href={item.attachment}>
+                      {item.title}
+                    </a>{" "}
+                  </td>
                   <td
                     className={
                       item.status === "Waiting Approve"

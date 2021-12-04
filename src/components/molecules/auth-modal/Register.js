@@ -25,6 +25,7 @@ const Register = ({
   const failedNotify = (text) => toast.error(text);
 
   const registerSubmitHandler = (e) => {
+    console.log(register);
     if (
       !register.fullname ||
       !register.email ||
@@ -60,7 +61,6 @@ const Register = ({
           setModal(true);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
           failedNotify(err.response.data.message);
         });
     }
@@ -150,14 +150,14 @@ const Register = ({
             ></Form.Group>
             <Form.Group className="mb-4" controlId="gender">
               <Form.Label className="fw-bold text-light">Gender</Form.Label>
-              <Form.Control
+              <select
+                className="bg-secondary text-light rounded  shadow-none form-select"
                 onChange={registerOnChangeHandler}
                 name="gender"
-                type="text"
-                required
-                className="bg-secondary shadow-none"
-                defaultValue={register.gender}
-              />
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
             </Form.Group>
             <div className="d-flex flex-column gap-2 ">
               <Button

@@ -1,7 +1,7 @@
 .profile-container {
   background-color: #f1f1f1;
   padding-top: 200px;
-  padding-bottom: 300px;
+  padding-bottom: 500px;
   position: relative;
 }
 
@@ -34,7 +34,7 @@ small {
 
 .profile-img {
   width: 350px;
-  height: auto;
+  height: 350px;
 }
 
 .profile-img .camera {
@@ -49,4 +49,24 @@ small {
 .profile-img:hover .profile {
   filter: blur(1px);
   cursor: pointer;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background-color: transparent;
+  border: none;
+}
+
+.nav-link {
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  border: none;
+}
+
+.nav-link:not(:hover) {
+  border: none;
 }

@@ -12,30 +12,26 @@ const LiteratureDetail = () => {
   const { id } = useParams();
   const { state } = useContext(AuthContext);
 
-  const successNotify = () => toast.success(`Success add to collections`);
-  const failedNotify = () => toast.error(`Collections already exist`);
+  const successNotify = (str) => toast.success(str);
+  const failedNotify = (str) => toast.error(str);
 
   const getLiterature = () => {
     setIsLoading(true);
     API.get(`/literatures/detail/${id}`)
       .then((response) => {
         setData(response.data.literaturesData);
-        console.log(response.data.literaturesData);
         setIsLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setIsLoading(false);
       });
   };
 
   const addCollection = (e) => {
     e.preventDefault();
-
     const literature = {
       id,
     };
-
     const config = {
       headers: {
         "Content-type": "application/json",
@@ -43,9 +39,9 @@ const LiteratureDetail = () => {
     };
 
     API.post("/collections", literature, config)
-      .then(() => successNotify())
-      .catch((error) => {
-        failedNotify();
+      .then((res) => successNotify(res.data.message))
+      .catch((err) => {
+        failedNotify(err.response.data.message);
       });
   };
 

@@ -9,8 +9,9 @@ const Search = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [isloading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState("");
 
-  let query = useParams();
+  const query = useParams();
 
   const onChangeHandle = (e) => {
     setSearch(e.target.value);
@@ -60,18 +61,46 @@ const Search = () => {
             fluid
           >
             {data.length === 0 ? (
-              <h1 className="text-danger text-center">
-                Opps {search === "" ? query.title : search} not found
-              </h1>
+              <>
+                <div>
+                  <p className="text-danger">Choose Date</p>
+                  <div className="input-group mb-3">
+                    <select
+                      onChange={(e) => setOptions(e.target.value)}
+                      className="bg-secondary text-light rounded ps-4 shadow-none form-select"
+                      id="inputGroupSelect01"
+                    >
+                      <option value="">Anytime</option>
+                      <option value="2020">Since 2020</option>
+                      <option value="2021">Since 2021</option>
+                      <option value="2022">Since 2022</option>
+                    </select>
+                  </div>
+                </div>
+                <div
+                  style={{ paddingLeft: "450px" }}
+                  className="d-flex flex-column gap-5 justify-content-center"
+                >
+                  <img
+                    style={{ width: "500px" }}
+                    src="/assets/undraw1.svg"
+                  ></img>
+                  <h1 className="text-danger text-center">
+                    Oppss {search === "" ? query.title : search} not found
+                  </h1>
+                </div>
+              </>
             ) : (
               <>
                 <div>
                   <p className="text-danger">Anytime</p>
                   <div className="input-group mb-3">
                     <select
+                      onChange={(e) => setOptions(e.target.value)}
                       className="bg-secondary rounded ps-4 shadow-none form-select"
                       id="inputGroupSelect01"
                     >
+                      <option value="">Anytime</option>
                       <option value="2020">Since 2020</option>
                       <option value="2021">Since 2021</option>
                       <option value="2022">Since 2022</option>
@@ -79,17 +108,25 @@ const Search = () => {
                   </div>
                 </div>
                 <div className="d-flex flex-row flex-wrap gap-5">
-                  {data?.map((item, index) => {
-                    return (
-                      <Thumbnail
-                        title={item.title}
-                        author={item.author}
-                        publish={item.publication_date}
-                        id={item.id}
-                        attachment={item.attachment}
-                      />
-                    );
-                  })}
+                  {data
+                    ?.filter((item) => {
+                      if (item.publication_date.includes(options)) {
+                        return item;
+                      } else if (!options) {
+                        return item;
+                      }
+                    })
+                    .map((item) => {
+                      return (
+                        <Thumbnail
+                          title={item.title}
+                          author={item.author}
+                          publish={item.publication_date}
+                          id={item.id}
+                          attachment={item.attachment}
+                        />
+                      );
+                    })}
                 </div>
               </>
             )}

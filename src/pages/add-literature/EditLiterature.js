@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavbarCom from "../../components/molecules/NavbarComp";
 import { InputGroup, FormControl, Container } from "react-bootstrap";
 import "./AddLiterature.css";
 import Button from "@restart/ui/esm/Button";
 import { API } from "../../config/API";
 import toast, { Toaster } from "react-hot-toast";
+import { useParams } from "react-router";
 
-const AddLiterature = () => {
+const EditLiterature = () => {
   const [form, setForm] = useState({
     title: "",
     pages: "",
@@ -15,8 +16,26 @@ const AddLiterature = () => {
     attachment: "",
   });
 
-  const successNotify = () => toast.success(`Add literature success`);
-  const failedNotify = () => toast.error(`Add literature failed`);
+  const { id } = useParams();
+
+  const successNotify = () => toast.success(`Edit literature success`);
+  const failedNotify = (msg) => toast.error(msg);
+
+  const getDetailLiteratures = () => {
+    API.get(`/literatures/detail/${id}`)
+      .then((res) => {
+        setForm({
+          ...form,
+          title: res.data.literaturesData.title,
+          pages: res.data.literaturesData.pages,
+          publication_date: res.data.literaturesData.publication_date,
+          author: res.data.literaturesData.author,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onChangeHandle = (e) => {
     setForm((prevState) => ({
@@ -25,8 +44,7 @@ const AddLiterature = () => {
       attachment: e.target.files,
     }));
   };
-
-  const onClickHandle = async (e) => {
+  const onClickHandle = (e) => {
     if (
       !form.attachment ||
       !form.pages ||
@@ -49,15 +67,9 @@ const AddLiterature = () => {
       formData.append("publication_date", form.publication_date);
       formData.append("author", form.author);
       formData.set("image", form.attachment[0], form.attachment[0].name);
-      await API.post("/literatures", formData, config)
+
+      API.patch(`/literature/${id}`, formData, config)
         .then(() => {
-          setForm({
-            title: "",
-            pages: "",
-            publication_date: "",
-            author: "",
-            attachment: "",
-          });
           successNotify();
         })
         .catch((err) => {
@@ -66,6 +78,10 @@ const AddLiterature = () => {
         });
     }
   };
+
+  useEffect(() => {
+    getDetailLiteratures();
+  }, []);
 
   return (
     <div className="bg-dark ">
@@ -77,7 +93,7 @@ const AddLiterature = () => {
             className="bg-secondary text-light shadow-none"
             placeholder="Title"
             onChange={onChangeHandle}
-            value={form.title}
+            defaultValue={form.title}
             name="title"
           />
         </InputGroup>
@@ -86,7 +102,7 @@ const AddLiterature = () => {
             className="bg-secondary text-light shadow-none"
             placeholder="Publication Date"
             onChange={onChangeHandle}
-            value={form.publication_date}
+            defaultValue={form.publication_date}
             name="publication_date"
           />
         </InputGroup>
@@ -97,7 +113,7 @@ const AddLiterature = () => {
             onChange={onChangeHandle}
             name="pages"
             type="number"
-            value={form.pages}
+            defaultValue={form.pages}
           />
         </InputGroup>
 
@@ -107,7 +123,7 @@ const AddLiterature = () => {
             placeholder="Author"
             onChange={onChangeHandle}
             name="author"
-            value={form.author}
+            defaultValue={form.author}
           />
         </InputGroup>
         <InputGroup className="mb-4">
@@ -124,7 +140,7 @@ const AddLiterature = () => {
             onClick={onClickHandle}
             className="btn btn-danger"
           >
-            Add Literature
+            Save
           </Button>
         </div>
       </Container>
@@ -133,4 +149,4 @@ const AddLiterature = () => {
   );
 };
 
-export default AddLiterature;
+export default EditLiterature;

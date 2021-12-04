@@ -14,6 +14,7 @@ import MyProfile from "./pages/profile/MyProfile";
 import Collection from "./pages/collection/Collection";
 import AdminPage from "./pages/admin-page/AdminPage";
 import AdminRoute from "./private-route/AdminRoute";
+import EditLiterature from "./pages/add-literature/EditLiterature";
 
 //init token
 if (localStorage.token) {
@@ -127,6 +128,14 @@ function App() {
                 <AdminRoute>
                   <AdminPage />
                 </AdminRoute>
+              }
+            />
+            <Route
+              path="/edit-literature/:id"
+              element={
+                <AuthRoute>
+                  <EditLiterature />
+                </AuthRoute>
               }
             />
           </>

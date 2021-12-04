@@ -1,10 +1,11 @@
 import { useState, useContext, useEffect } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Tab, Tabs } from "react-bootstrap";
 import NavbarComp from "../../components/molecules/NavbarComp";
 import "./MyProfile.css";
 import { AuthContext } from "../../context/AuthContext";
 import Thumbnail from "../../components/atom/Thumbnail";
 import { API } from "../../config/API";
+
 const MyProfile = () => {
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
@@ -58,6 +59,37 @@ const MyProfile = () => {
     getLiteratures();
   }, []);
 
+  const republishLiterature = (id) => {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const status = {
+      status: "Waiting Approve",
+    };
+
+    API.patch(`/literatures/${id}`, status, config)
+      .then(() => {
+        getLiteratures();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteLiterature = (id) => {
+    API.delete(`/literatures/${id}`)
+      .then((res) => {
+        console.log(res);
+        getLiteratures();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <NavbarComp />
@@ -68,29 +100,29 @@ const MyProfile = () => {
             <div className="d-flex align-items-center gap-3 mb-4 ">
               <img alt="" className="img-1" src="/assets/enve.png"></img>
               <div>
-                <p className="fw-bold">{state.user?.email}</p>
-                <small>Email</small>
+                <p className="fw-bold text-light">{state.user?.email}</p>
+                <small className="text-light">Email</small>
               </div>
             </div>
             <div className="d-flex align-items-center gap-3 mb-4 ">
               <img alt="" src="/assets/male.png"></img>
               <div>
-                <p className="fw-bold">{state.user?.gender}</p>
-                <small>Gender</small>
+                <p className="fw-bold text-light">{state.user?.gender}</p>
+                <small className="text-light">Gender</small>
               </div>
             </div>
             <div className="d-flex align-items-center gap-3 mb-4 ">
               <img alt="" src="/assets/phone.png"></img>
               <div>
-                <p className="fw-bold">{state.user?.phone}</p>
-                <small>Mobile Phone</small>
+                <p className="fw-bold text-light">{state.user?.phone}</p>
+                <small className="text-light">Mobile Phone</small>
               </div>
             </div>
             <div className="d-flex align-items-center gap-3 mb-4 ">
               <img alt="" src="/assets/map.png"></img>
               <div>
-                <p className="fw-bold">{state.user?.address}</p>
-                <small>Adress</small>
+                <p className="fw-bold text-light">{state.user?.address}</p>
+                <small className="text-light">Adress</small>
               </div>
             </div>
           </div>
@@ -109,46 +141,111 @@ const MyProfile = () => {
                 src="/assets/camera.png"
               ></img>
             </label>
-            <label for="actual-btn">
+
+            {preview ? (
               <img
                 alt=""
-                className="position-absolute camera"
-                src="/assets/camera.png"
+                style={{ width: "350px", height: "350px" }}
+                src={preview}
               ></img>
-            </label>
-            {preview ? (
-              <img alt="" className="profile" src={preview}></img>
             ) : (
               <img
                 alt=""
-                className="profile"
+                style={{ width: "350px", height: "350px" }}
                 src={state.user?.profile_pic}
               ></img>
             )}
+
             <Button
               className="btn btn-danger text-light fw-bold"
               id="actual-btn"
               onClick={onClickHandler}
             >
-              Change Photo Profile
+              Save
             </Button>
           </div>
         </Container>
         <h1 className="history-trip">Literature</h1>
+
         <Container>
-          <div className="d-flex flex-row gap-4">
-            {data.map((item) => {
-              return (
-                <Thumbnail
-                  author={item.author}
-                  publish={item.publication_date}
-                  id={item.id}
-                  title={item.title}
-                  attachment={item.attachment}
-                />
-              );
-            })}
-          </div>
+          <Tabs
+            defaultActiveKey="profile"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="home" title="Approve">
+              <div className="d-flex flex-row gap-4">
+                {data
+                  .filter((item) => {
+                    if (item.status === "Approve") {
+                      return item;
+                    }
+                  })
+                  .map((item) => {
+                    return (
+                      <Thumbnail
+                        author={item.author}
+                        publish={item.publication_date}
+                        id={item.id}
+                        title={item.title}
+                        attachment={item.attachment}
+                        status={item.status}
+                        republish={republishLiterature}
+                        deleteLiterature={deleteLiterature}
+                      />
+                    );
+                  })}
+              </div>
+            </Tab>
+            <Tab className="px-3" eventKey="profile" title="Waiting Approve">
+              <div className="d-flex flex-row gap-4">
+                {data
+                  .filter((item) => {
+                    if (item.status === "Waiting Approve") {
+                      return item;
+                    }
+                  })
+                  .map((item) => {
+                    return (
+                      <Thumbnail
+                        author={item.author}
+                        publish={item.publication_date}
+                        id={item.id}
+                        title={item.title}
+                        attachment={item.attachment}
+                        status={item.status}
+                        republish={republishLiterature}
+                        deleteLiterature={deleteLiterature}
+                      />
+                    );
+                  })}
+              </div>
+            </Tab>
+            <Tab eventKey="contact" title="Cancel">
+              <div className="d-flex flex-row gap-4">
+                {data
+                  .filter((item) => {
+                    if (item.status === "Cancel") {
+                      return item;
+                    }
+                  })
+                  .map((item) => {
+                    return (
+                      <Thumbnail
+                        author={item.author}
+                        publish={item.publication_date}
+                        id={item.id}
+                        title={item.title}
+                        attachment={item.attachment}
+                        status={item.status}
+                        republish={republishLiterature}
+                        deleteLiterature={deleteLiterature}
+                      />
+                    );
+                  })}
+              </div>
+            </Tab>
+          </Tabs>
         </Container>
       </Container>
     </div>

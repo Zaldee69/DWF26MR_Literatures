@@ -6,7 +6,6 @@ import Button from "@restart/ui/esm/Button";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import LandingNavbar from "../../components/molecules/LandingNavbar";
-import toast, { Toaster } from "react-hot-toast";
 
 const Home = () => {
   const [search, setSearch] = useState("");
