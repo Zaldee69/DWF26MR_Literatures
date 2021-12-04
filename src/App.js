@@ -23,13 +23,16 @@ if (localStorage.token) {
 
 function App() {
   const { state, dispatch } = useContext(AuthContext);
+  console.log(state);
 
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
   }, []);
-
+  useEffect(() => {
+    userAuth();
+  }, []);
   const userAuth = () => {
     API.get("/check-auth")
       .then((response) => {
@@ -54,10 +57,6 @@ function App() {
         });
       });
   };
-
-  useEffect(() => {
-    userAuth();
-  }, []);
 
   return (
     <BrowserRouter>

@@ -56,7 +56,6 @@ const Login = ({
           }
 
           navigate("/home");
-          window.location.reload();
         })
         .catch((err) => {
           failedNotify(err.response.data.message);
