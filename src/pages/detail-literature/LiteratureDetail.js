@@ -19,7 +19,9 @@ const LiteratureDetail = () => {
     setIsLoading(true);
     API.get(`/literatures/detail/${id}`)
       .then((response) => {
-        setData(response.data.literaturesData);
+        setData(response.data.data);
+        console.log(response);
+
         setIsLoading(false);
       })
       .catch(() => {

@@ -17,7 +17,9 @@ const MyProfile = () => {
   const getLiteratures = () => {
     API.get("/literatures/user")
       .then((response) => {
-        setData(response.data.literaturesData);
+        setData(response.data.data);
+        console.log(response.data.data);
+        data.map((el) => console.log(el));
       })
       .catch((error) => {
         console.log(error);
@@ -176,7 +178,7 @@ const MyProfile = () => {
             <Tab eventKey="home" title="Approve">
               <div className="d-flex flex-row gap-4">
                 {data
-                  .filter((item) => {
+                  ?.filter((item) => {
                     if (item.status === "Approve") {
                       return item;
                     }
@@ -200,7 +202,7 @@ const MyProfile = () => {
             <Tab className="px-3" eventKey="profile" title="Waiting Approve">
               <div className="d-flex flex-row gap-4">
                 {data
-                  .filter((item) => {
+                  ?.filter((item) => {
                     if (item.status === "Waiting Approve") {
                       return item;
                     }
@@ -224,7 +226,7 @@ const MyProfile = () => {
             <Tab eventKey="contact" title="Cancel">
               <div className="d-flex flex-row gap-4">
                 {data
-                  .filter((item) => {
+                  ?.filter((item) => {
                     if (item.status === "Cancel") {
                       return item;
                     }

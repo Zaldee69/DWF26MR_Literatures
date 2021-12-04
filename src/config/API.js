@@ -2,9 +2,7 @@ import axios from "axios";
 
 // Create base URL API
 export const API = axios.create({
-  baseURL:
-    "https://literatures-backend.herokuapp.com/api/v1/" ||
-    "http://localhost:3500/api/v1/",
+  baseURL: "http://localhost:3500/api/v1/",
 });
 
 // Set Authorization Token Header

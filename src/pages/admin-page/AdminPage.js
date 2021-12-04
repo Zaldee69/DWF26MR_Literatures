@@ -11,8 +11,7 @@ const AdminPage = () => {
   const getLiterature = () => {
     API.get("/literatures")
       .then((result) => {
-        setData(result.data.literaturesData);
-        console.log(result.data);
+        setData(result.data.data);
       })
       .catch((err) => {
         console.log(err);

@@ -23,7 +23,6 @@ if (localStorage.token) {
 
 function App() {
   const { state, dispatch } = useContext(AuthContext);
-  console.log(state);
 
   useEffect(() => {
     if (localStorage.token) {
@@ -41,7 +40,6 @@ function App() {
         }
         //get user data
         let payload = response.data;
-        console.log(response);
 
         payload.token = localStorage.token;
         //send data to useContext
